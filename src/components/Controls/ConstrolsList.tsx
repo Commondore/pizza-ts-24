@@ -5,9 +5,15 @@ import ControlItem from "@components/Controls/ControlItem";
 
 interface ConstrolsListProps {
   ings: IIngList;
+  add: (type: string) => void;
+  remove: (e: any, type: string) => void;
 }
 
-const ConstrolsList = ({ ings }: ConstrolsListProps) => {
+const ConstrolsList = ({
+  ings,
+  add,
+  remove,
+}: ConstrolsListProps) => {
   return (
     <div className={styles.controls}>
       {Object.keys(ings).map((ingName) => {
@@ -15,6 +21,8 @@ const ConstrolsList = ({ ings }: ConstrolsListProps) => {
           <ControlItem
             key={ingName}
             ing={ingName}
+            add={() => add(ingName)}
+            remove={(e) => remove(e, ingName)}
             // name={ings[ingName].name}
             // count={ings[ingName].count}
             {...ings[ingName]}
