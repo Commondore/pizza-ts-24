@@ -2,6 +2,7 @@ import { IIngList } from "@components/Pizza";
 
 import styles from "./style.module.css";
 import ConstrolsList from "@components/Controls/ConstrolsList";
+import TotalPrice from "@components/Controls/TotalPrice";
 
 interface ControlsProps {
   ings: IIngList;
@@ -24,9 +25,7 @@ const Controls = ({
         add={add}
         remove={remove}
       />
-      <div>
-        Общая стоимость: <strong>{total} сом</strong>
-      </div>
+      <TotalPrice total={total} />
     </div>
   );
 };
