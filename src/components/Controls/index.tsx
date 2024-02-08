@@ -1,14 +1,16 @@
 import { IIngList } from "@components/Pizza";
+import TotalPrice from "@components/Controls/TotalPrice";
+import ConstrolsList from "@components/Controls/ConstrolsList";
 
 import styles from "./style.module.css";
-import ConstrolsList from "@components/Controls/ConstrolsList";
-import TotalPrice from "@components/Controls/TotalPrice";
 
 interface ControlsProps {
   ings: IIngList;
   add: (type: string) => void;
   remove: (e: any, type: string) => void;
   total: number;
+  purchasable: boolean;
+  purchasing: () => void;
 }
 
 const Controls = ({
@@ -16,6 +18,8 @@ const Controls = ({
   add,
   remove,
   total,
+  purchasable,
+  purchasing,
 }: ControlsProps) => {
   return (
     <div>
@@ -26,6 +30,16 @@ const Controls = ({
         remove={remove}
       />
       <TotalPrice total={total} />
+
+      <div className={styles.pizzaOrder}>
+        <button
+          className={styles.pizzaOrderBtn}
+          disabled={!purchasable}
+          onClick={purchasing}
+        >
+          Оформить заказ
+        </button>
+      </div>
     </div>
   );
 };

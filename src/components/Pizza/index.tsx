@@ -3,6 +3,7 @@ import { useState } from "react";
 
 import styles from "./style.module.css";
 import Controls from "@components/Controls";
+import Modal from "@shared/UI/Modal/Modal";
 
 export interface IIngregient {
   name: string;
@@ -23,6 +24,8 @@ const PizzaBuilder = () => {
   });
 
   const [total, setTotal] = useState(50);
+
+  const [purchasing, setPurchasing] = useState(false);
 
   const filtredIngredients = () => {
     return Object.keys(ings).filter((ingName) => {
@@ -66,14 +69,33 @@ const PizzaBuilder = () => {
     });
   };
 
+  const isPurchasable = () => {
+    const count = Object.keys(ings).reduce(
+      (acc, ingName) => {
+        return acc + ings[ingName].count;
+      },
+      0
+    );
+
+    return count > 0;
+  };
+
   return (
     <div className={styles.pizzaWrap}>
+      <Modal
+        isVisible={purchasing}
+        close={() => setPurchasing(false)}
+      >
+        <h1>Hello modal</h1>
+      </Modal>
       <Pizza ings={filtredIngredients()} />
       <Controls
         ings={ings}
         add={addIngredient}
         remove={removeIngredient}
         total={total}
+        purchasable={isPurchasable()}
+        purchasing={() => setPurchasing(true)}
       />
     </div>
   );
