@@ -1,0 +1,35 @@
+.btn {
+  display: inline-flex;
+  padding: 8px 15px;
+  border: none;
+  background: #ccc;
+  color: #000;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.danger {
+  background: tomato;
+  color: white;
+}
+.success {
+  background: yellowgreen;
+  color: white;
+}
+.info {
+  background: rgb(50, 161, 205);
+  color: white;
+}
+
+.xs {
+  padding: 5px 7px;
+  font-size: 0.9rem;
+}
+.lg {
+  padding: 10px 22px;
+  font-size: 1.1rem;
+}
+.xl {
+  padding: 14px 30px;
+  font-size: 1.4rem;
+}

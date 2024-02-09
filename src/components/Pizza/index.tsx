@@ -4,6 +4,7 @@ import { useState } from "react";
 import styles from "./style.module.css";
 import Controls from "@components/Controls";
 import Modal from "@shared/UI/Modal/Modal";
+import OrderInfo from "@components/Order/OrderInfo";
 
 export interface IIngregient {
   name: string;
@@ -80,13 +81,21 @@ const PizzaBuilder = () => {
     return count > 0;
   };
 
+  const orderCancelled = () => setPurchasing(false);
+
+  const orderContinued = () => {
+    alert("To be Continued");
+  };
+
   return (
     <div className={styles.pizzaWrap}>
-      <Modal
-        isVisible={purchasing}
-        close={() => setPurchasing(false)}
-      >
-        <h1>Hello modal</h1>
+      <Modal isVisible={purchasing} close={orderCancelled}>
+        <OrderInfo
+          ings={ings}
+          price={total}
+          cancel={orderCancelled}
+          continued={orderContinued}
+        />
       </Modal>
       <Pizza ings={filtredIngredients()} />
       <Controls
