@@ -5,6 +5,11 @@ import styles from "./style.module.css";
 import Controls from "@components/Controls";
 import Modal from "@shared/UI/Modal/Modal";
 import OrderInfo from "@components/Order/OrderInfo";
+import {
+  useNavigate,
+  createSearchParams,
+  URLSearchParamsInit,
+} from "react-router-dom";
 
 export interface IIngregient {
   name: string;
@@ -23,10 +28,10 @@ const PizzaBuilder = () => {
     sausage: { name: "Колбаса", count: 0, price: 50 },
     mushrooms: { name: "Грибы", count: 0, price: 40 },
   });
-
   const [total, setTotal] = useState(50);
-
   const [purchasing, setPurchasing] = useState(false);
+
+  const navigate = useNavigate();
 
   const filtredIngredients = () => {
     return Object.keys(ings).filter((ingName) => {
@@ -84,7 +89,20 @@ const PizzaBuilder = () => {
   const orderCancelled = () => setPurchasing(false);
 
   const orderContinued = () => {
-    alert("To be Continued");
+    const params = Object.keys(ings).reduce(
+      (acc: any, ingName) => {
+        if (ings[ingName].count > 0) {
+          acc[ingName] = ings[ingName].count;
+        }
+        return acc;
+      },
+      {}
+    );
+
+    navigate({
+      pathname: "/checkout",
+      search: `?${createSearchParams(params)}`,
+    });
   };
 
   return (
