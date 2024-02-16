@@ -4,3 +4,27 @@
   display: grid;
   grid-template-columns: minmax(500px, 1fr) 1fr;
 }
+
+.contactData {
+  margin: 2rem auto 0;
+  max-width: 600px;
+  padding: 2rem;
+  box-sizing: border-box;
+  box-shadow: 0 0 10px -5px rgba(0, 0, 0, 0.6);
+  border-radius: 30px;
+  text-align: center;
+}
+.title {
+  text-align: center;
+  text-transform: uppercase;
+}
+.group {
+  margin-bottom: 1rem;
+}
+.input {
+  width: 100%;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}

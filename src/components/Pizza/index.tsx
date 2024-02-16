@@ -8,7 +8,6 @@ import OrderInfo from "@components/Order/OrderInfo";
 import {
   useNavigate,
   createSearchParams,
-  URLSearchParamsInit,
 } from "react-router-dom";
 
 export interface IIngregient {

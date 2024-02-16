@@ -1,6 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./style.module.css";
 import CheckoutSummary from "@components/Checkout/CheckoutSummary";
+
+import {
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 
 export interface IIngs {
   [key: string]: number;
@@ -8,19 +13,51 @@ export interface IIngs {
 
 const Checkout = () => {
   const [ings, setIngs] = useState<IIngs>({
-    cheese: 1,
-    sausage: 1,
+    cheese: 0,
+    sausage: 0,
     olives: 0,
-    mushrooms: 1,
+    mushrooms: 0,
   });
+  const [params] = useSearchParams();
+
   const filtredIngredients = () => {
     return Object.keys(ings).filter((ingName) => {
       return ings[ingName] > 0;
     });
   };
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setIngs((ings) => {
+      const currentIngs: IIngs = {};
+
+      for (const [ingName, count] of params.entries()) {
+        currentIngs[ingName] = parseInt(count);
+      }
+
+      return {
+        ...ings,
+        ...currentIngs,
+      };
+    });
+
+    // [['sausage', '1'], ['cheese', '2']]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const cancelOrder = () => navigate("/");
+
+  const continueOrder = () =>
+    navigate("/checkout/contact-data");
+
   return (
     <div className={styles.checkout}>
-      <CheckoutSummary ings={filtredIngredients()} />
+      <CheckoutSummary
+        ings={filtredIngredients()}
+        cancel={cancelOrder}
+        continued={continueOrder}
+      />
     </div>
   );
 };
