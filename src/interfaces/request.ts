@@ -3,11 +3,11 @@ export interface IOrderRequest {
   customer: Customer;
 }
 
-interface Ingredients {
+export interface Ingredients {
   [key: string]: number;
 }
 
-interface Customer {
+export interface Customer {
   name: string;
   email: string;
   address: string;
