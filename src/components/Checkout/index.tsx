@@ -20,12 +20,6 @@ const Checkout = () => {
   });
   const [params] = useSearchParams();
 
-  const filtredIngredients = () => {
-    return Object.keys(ings).filter((ingName) => {
-      return ings[ingName] > 0;
-    });
-  };
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -54,7 +48,7 @@ const Checkout = () => {
   return (
     <div className={styles.checkout}>
       <CheckoutSummary
-        ings={filtredIngredients()}
+        ings={ings}
         cancel={cancelOrder}
         continued={continueOrder}
       />
