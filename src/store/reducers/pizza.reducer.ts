@@ -39,11 +39,12 @@ const pizzaSlice = createSlice({
     },
     removeIng: (state, action: PayloadAction<string>) => {
       const currentIng = state.ings[action.payload];
-      currentIng.count--;
-      state.total =
-        state.total - currentIng.price * currentIng.count;
+      state.total -= currentIng.price * currentIng.count;
+      currentIng.count = 0;
     },
   },
 });
+
+export const { addIng, removeIng } = pizzaSlice.actions;
 
 export default pizzaSlice.reducer;

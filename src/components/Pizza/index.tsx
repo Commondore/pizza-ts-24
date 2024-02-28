@@ -5,19 +5,21 @@ import styles from "./style.module.css";
 import Controls from "@components/Controls";
 import Modal from "@shared/UI/Modal/Modal";
 import OrderInfo from "@components/Order/OrderInfo";
-import {
-  useNavigate,
-  createSearchParams,
-} from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@store";
+import {
+  addIng,
+  removeIng,
+} from "@store/reducers/pizza.reducer";
 
 const PizzaBuilder = () => {
   const { ings, total } = useSelector(
     (store: RootState) => store.pizza
   );
-
   const [purchasing, setPurchasing] = useState(false);
+
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
@@ -28,19 +30,7 @@ const PizzaBuilder = () => {
   };
 
   const addIngredient = (type: string) => {
-    setIngs((ings) => {
-      return {
-        ...ings,
-        [type]: {
-          ...ings[type],
-          count: ings[type].count + 1,
-        },
-      };
-    });
-
-    setTotal((total) => {
-      return total + ings[type].price;
-    });
+    dispatch(addIng(type));
   };
 
   const removeIngredient = (
@@ -48,19 +38,7 @@ const PizzaBuilder = () => {
     type: string
   ) => {
     e.stopPropagation();
-    setIngs((ings) => {
-      return {
-        ...ings,
-        [type]: {
-          ...ings[type],
-          count: 0,
-        },
-      };
-    });
-
-    setTotal((total) => {
-      return total - ings[type].price * ings[type].count;
-    });
+    dispatch(removeIng(type));
   };
 
   const isPurchasable = () => {
@@ -77,20 +55,7 @@ const PizzaBuilder = () => {
   const orderCancelled = () => setPurchasing(false);
 
   const orderContinued = () => {
-    const params = Object.keys(ings).reduce(
-      (acc: any, ingName) => {
-        if (ings[ingName].count > 0) {
-          acc[ingName] = ings[ingName].count;
-        }
-        return acc;
-      },
-      {}
-    );
-
-    navigate({
-      pathname: "/checkout",
-      search: `?${createSearchParams(params)}`,
-    });
+    navigate("/checkout");
   };
 
   return (
