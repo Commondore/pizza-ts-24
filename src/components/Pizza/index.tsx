@@ -9,25 +9,14 @@ import {
   useNavigate,
   createSearchParams,
 } from "react-router-dom";
-
-export interface IIngregient {
-  name: string;
-  count: number;
-  price: number;
-}
-
-export interface IIngList {
-  [key: string]: IIngregient;
-}
+import { useSelector } from "react-redux";
+import { RootState } from "@store";
 
 const PizzaBuilder = () => {
-  const [ings, setIngs] = useState<IIngList>({
-    olives: { name: "Оливки", count: 0, price: 20 },
-    cheese: { name: "Сыр", count: 0, price: 25 },
-    sausage: { name: "Колбаса", count: 0, price: 50 },
-    mushrooms: { name: "Грибы", count: 0, price: 40 },
-  });
-  const [total, setTotal] = useState(50);
+  const { ings, total } = useSelector(
+    (store: RootState) => store.pizza
+  );
+
   const [purchasing, setPurchasing] = useState(false);
 
   const navigate = useNavigate();
