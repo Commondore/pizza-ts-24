@@ -1,6 +1,5 @@
 import {
   fetchOrderByCustomer,
-  fetchOrderByID,
   fetchOrders,
 } from "@api/request";
 import OrderItem from "@components/Order/OrderItem";
